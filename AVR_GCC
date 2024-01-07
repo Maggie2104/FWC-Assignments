@@ -1,26 +1,31 @@
-// Include the necessary Arduino library 
-#include <avr/io.h> 
+#include <avr/io.h>
 #include <util/delay.h>
 #include <stdbool.h>
- 
-// Define the pin connected to the LED 
-const int ledPin = 13; 
- 
-void setup() { 
-  // Set the LED pin as an output 
-  pinMode(ledPin, OUTPUT); 
-} 
- 
-void loop() { 
-  // Turn the LED on 
-  digitalWrite(ledPin, HIGH); 
-   
-  // Wait for 1 second (1000 milliseconds) 
-  delay(1000); 
-   
-  // Turn the LED off 
-  digitalWrite(ledPin, LOW); 
-   
-  // Wait for another 1 second 
-  delay(1000); 
+
+int main(void) {
+    bool f = 0;
+    bool a = 0, b = 0, c = 0;
+    DDRD = 0b00000100; // PD2 as output
+    
+    PORTD = 0b11100000; // Set internal pull-ups for PD5, PD6, PD7
+
+    while (1) {
+       
+        a = (PIND & (1 << PIND6)) == (1 << PIND5);
+        b = (PIND & (1 << PIND7)) == (1 << PIND6);
+        c = (PIND & (1 << PIND8)) == (1 << PIND7);
+        f = a && (!b || !c);
+
+        PORTD = (f << 2);
+
+        if (f) {
+            PORTD |= ~(1 << PD2); // Turn on PD2 when y is 1
+        } else {
+            PORTD &= (1 << PD2); // Turn off PD2 when y is not 1
+        }
+
+        _delay_ms(200L);
+    }
+
+    return 0;
 }
