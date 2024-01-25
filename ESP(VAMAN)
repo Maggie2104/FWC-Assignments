@@ -1,3 +1,5 @@
+
+
 //----------------------Skeleton Code--------------------//
 #include <WiFi.h>
 #include <WiFiUdp.h>
@@ -5,8 +7,8 @@
 
 //    Can be client or even host   //
 #ifndef STASSID
-#define STASSID "gvv"  // Replace with your network credentials
-#define STAPSK  "abcd"
+#define STASSID "Galaxy"  // Replace with your network credentials
+#define STAPSK  "12345678"
 #endif
 
 const char* ssid = STASSID;
@@ -28,41 +30,38 @@ void OTAloop() {
 }
 
 //-------------------------------------------------------//
-
-  int Q1=0,Q2=1,Q3=0,t1,d2,t3;
-  const int U_pin = 2;
-  const int V_pin = 3;
-  const int W_pin = 5;
+//int Q,R,S,Y;
+int Q1=0,Q2=1,Q3=0,t1,d2,t3;
 void setup(){
   OTAsetup();
 
   //-------------------//
   // Custom setup code //
   //-------------------//
- pinMode(2, OUTPUT);
- pinMode(3, OUTPUT);
- pinMode(5, OUTPUT);
+	pinMode(2, OUTPUT);	
+	pinMode(3, OUTPUT);	
+	//pinMode(4, INPUT);	
+	pinMode(5, OUTPUT);	
 
 }
 
 void loop() {
   OTAloop();
-  delay(10); 
-
-  t1 = !Q3;
-  d2 = Q1;
-  t3 = Q2;
-  Q1 = (t1 && Q1) || (!t1 && !Q1);
-  Q2 = d2;
-  Q3 = (t3 && Q3) || (!t3 && !Q3);
-
-
-  // If no custom loop code ensure to have a delay in loop
+  delay(10);  // If no custom loop code ensure to have a delay in loop
   //-------------------//
   // Custom loop code  //
   //-------------------//
-   digitalWrite(2, Q1);
-   digitalWrite(3, Q2);
-   digitalWrite(5, Q3);
-   delay(5000);
+  	
+  	t1=!Q3;
+	d2=Q1;
+	t3=Q2;
+	Q1=(t1&&Q1)||(!t1&&!Q1);
+	Q2=d2;
+	Q3=(t3&&Q3)||(!t3&&!Q3);
+	digitalWrite(2, Q1);
+	digitalWrite(3, Q2);
+	digitalWrite(5, Q3);
+	delay(1000);
 }
+
+
